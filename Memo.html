@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>간단한 메모</title>
+</head>
+<body>
+    <h2>메모장</h2>
+    <textarea id="memo" rows="10" cols="50" placeholder="메모를 입력하세요!"></textarea>
+    <br>
+    <button id="clear">초기화</button>
+
+    <script>
+        const memo = document.getElementById("memo");
+        const clearBtn = document.getElementById("clear");
+        const STORAGE_KEY = "userMemo";
+
+        memo.value = localStorage.getItem(STORAGE_KEY) ||"";
+
+        memo.addEventListener("input", () => {
+            localStorage.setItem(STORAGE_KEY, memo.value);
+        });
+
+        clearBtn.addEventListener("click", () => {
+            localStorage.removeItem(STORAGE_KEY);
+            memo.value = "";
+        });
+    </script>
+</body>
+</html>
