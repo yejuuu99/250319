@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>업그레이드된 카운트다운 타이머</title>
+    <link rel="stylesheet" href="upgraded timer style.css">
+</head>
+<body>
+    <h1>카운트다운 타이머</h1>
+    <div id="timer">10</div>
+    <button onclick="startTimer()">시작</button>
+    <button onclick="pauseTimer()">일시정지</button>
+    <button onclick="resetTimer()">리셋</button>
+<script>
+    let time = 10;
+    let interval;
+    let isPaused = false;
+
+    function updateDisplay(){
+        document.getElementById("timer").textContent = time > 0 ? time : "타이머 종료!"; //삼항 연산자 사용
+    }
+
+    function startTimer(){
+        if (!interval){
+            interval = setInterval(()=> {
+                if (!isPaused && time > 0){
+                    time--;
+                    updateDisplay();
+                    if (time === 0){
+                        clearInterval(interval);
+                        interval = null;
+                    }
+                }
+            }, 1000);
+        }
+    }
+
+    function pauseTimer(){
+        isPaused = !false;
+        updateDisplay();
+    }
+
+    updateDisplay();
+</script>
+</body>
+</html>
