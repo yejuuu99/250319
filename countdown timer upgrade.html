@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>업그레이드된 카운트다운 타이머</title>
-    <link rel="stylesheet" href="upgraded timer style.css">
+    <link rel="stylesheet" href="upgraded_timer_style.css">
 </head>
 <body>
     <h1>카운트다운 타이머</h1>
@@ -12,36 +12,50 @@
     <button onclick="startTimer()">시작</button>
     <button onclick="pauseTimer()">일시정지</button>
     <button onclick="resetTimer()">리셋</button>
-<script>
-    let time = 10;
-    let interval;
-    let isPaused = false;
 
-    function updateDisplay(){
-        document.getElementById("timer").textContent = time > 0 ? time : "타이머 종료!"; //삼항 연산자 사용
-    }
+    <script>
+        let time = 10;
+        let interval = null;
+        let isPaused = false;
 
-    function startTimer(){
-        if (!interval){
-            interval = setInterval(()=> {
-                if (!isPaused && time > 0){
+        function updateDisplay() {
+            document.getElementById("timer").textContent = time > 0 ? time : "타이머 종료!";
+        }
+
+        function startTimer() {
+            if (interval) return; // 이미 실행 중이라면 중복 실행 방지
+
+            isPaused = false; // 재시작할 때 해제
+
+            interval = setInterval(() => {
+                if (time > 0) {
                     time--;
                     updateDisplay();
-                    if (time === 0){
-                        clearInterval(interval);
-                        interval = null;
-                    }
+                } 
+                
+                if (time === 0) {
+                    clearInterval(interval);
+                    interval = null;
                 }
             }, 1000);
         }
-    }
 
-    function pauseTimer(){
-        isPaused = !false;
-        updateDisplay();
-    }
+        function pauseTimer() {
+            if (interval) {
+                clearInterval(interval);
+                interval = null;
+                isPaused = true;
+            }
+        }
 
-    updateDisplay();
-</script>
+        function resetTimer() {
+            clearInterval(interval);
+            interval = null;
+            time = 10;
+            isPaused = false;
+            updateDisplay();
+        }
+
+    </script>
 </body>
 </html>
